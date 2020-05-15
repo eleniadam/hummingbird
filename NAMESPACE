@@ -1,0 +1,4 @@
+useDynLib(hummingbird, .registration=TRUE)
+export('hummingbirdEM', 'hummingbirdPostAdjustment', 'hummingbirdGraph')
+importFrom(Rcpp, evalCpp)
+importFrom("graphics", "abline", "legend", "lines", "par", "text", "plot")
