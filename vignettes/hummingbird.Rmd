@@ -1,15 +1,20 @@
 ---
 title: "The hummingbird Package"
-author: "Eleni Adam"
-date: "5/14/2020"
-output: pdf_document
+author:
+- name: Eleni Adam
+  affiliation: Old Dominion University, Norfolk, VA, USA
+package: hummingbird
+output: 
+    BiocStyle::html_document
 vignette: >
-    %\VignetteEncoding{UTF-8}
+	%\VignetteIndexEntry{hummingbird}
     %\VignetteEngine{knitr::rmarkdown}
-    %\VignetteIndexEntry{hummingbird}
+    %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=TRUE}
+library(knitr)
+library(rmarkdown)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
