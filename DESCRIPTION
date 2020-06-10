@@ -2,7 +2,7 @@ Package: hummingbird
 Type: Package
 Title: Bayesian Hidden Markov Model for the detection of differentially
         methylated regions
-Version: 0.99.4
+Version: 0.99.5
 Authors@R: person("Eleni", "Adam", email = "eadam002@odu.edu",role = c("aut", "cre"))
 Description: A Bayesian Hidden Markov Model for detection of differentially
     methylated regions between case and control groups using whole genome 
