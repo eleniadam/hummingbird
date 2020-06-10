@@ -1,5 +1,5 @@
 ---
-title: "The hummingbird Package"
+title: "The hummingbird"
 author: Eleni Adam
 affiliation: Old Dominion University, Norfolk, VA, USA
 package: hummingbird
