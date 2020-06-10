@@ -1,15 +1,16 @@
 ---
 title: "The hummingbird Package"
-author:
-- name: Eleni Adam
-  affiliation: Old Dominion University, Norfolk, VA, USA
+author: Eleni Adam
+affiliation: Old Dominion University, Norfolk, VA, USA
 package: hummingbird
-output: 
-    BiocStyle::html_document
+output:
+  BiocStyle::html_document:
+    toc: true
+    toc_depth: 2
 vignette: >
-	%\VignetteIndexEntry{hummingbird}
-    %\VignetteEngine{knitr::rmarkdown}
-    %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{hummingbird}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=TRUE}
