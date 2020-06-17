@@ -34,6 +34,10 @@ The DMRs contains the detected regions based on the user-defined arguments, prov
 }
 
 \examples{
+library(GenomicRanges)
+library(SummarizedExperiment)
+data(exampleHummingbird)
+emInfo <- hummingbirdEM(experimentInfo = exampleSE, binSize = 40)
 postAdjInfo <- hummingbirdPostAdjustment(experimentInfo = exampleSE, emInfo = emInfo, minCpGs = 10, minLength = 100, maxGap = 300)
 }
 

@@ -27,7 +27,11 @@ The end coordinate of the genomic region to look into.
 The function outputs two graphs: The Methylation Level graph and the Predictions graph.
 }
 \examples{
+library(GenomicRanges)
+library(SummarizedExperiment)
+data(exampleHummingbird)
+emInfo <- hummingbirdEM(experimentInfo = exampleSE, binSize = 40)
+postAdjInfo <- hummingbirdPostAdjustment(experimentInfo = exampleSE, emInfo = emInfo, minCpGs = 10, minLength = 100, maxGap = 300)
 hummingbirdGraph(experimentInfo = exampleSE, postAdjInfoDMRs = postAdjInfo$DMRs, coord1 = 107991, coord2 = 108350)
-
 }
 
