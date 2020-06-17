@@ -7,14 +7,14 @@ Post Adjustment algorithm for the output of the EM
 This function adjusts HMM output such that each detected DMR has a minimum length and a minimum number of CpGs in each DMR.
 }
 \usage{
-hummingbirdPostAdjustment(em, pos, minCpGs, minLength, maxGap)
+hummingbirdPostAdjustment(experimentInfo, emInfo, minCpGs, minLength, maxGap)
 }
 \arguments{
-    \item{em}{
-The obs output of the hummingbirdEM function.
+    \item{experimentInfo}{
+A SummarizedExperiment object containing the four assays: normM, normUM, abnormM, abnormUM and the CpG position information: pos.
 }
-    \item{pos}{
-The CpG positions. It must be in the structure of a matrix.
+    \item{emInfo}{
+The output GenomicRanges object of the hummingbirdEM function.
 }
     \item{minCpGs}{
 The minimum number of CpGs contained in a DMR. Default value: 10.
@@ -27,12 +27,13 @@ The maximum gap between any two CpGs. Default value: 300.
 }
 }
 \value{
-\item{obsPostAdj }{A matrix containing the transformed observations for each bin and the adjusted predictions for each bin (0-normal, 1-hyper, 2-hypo).}
-\item{DMRs }{A matrix containing the detected regions based on the user-defined arguments. The columns of the DMRs matrix are: Region number, Start genomic position, End genomic position, Length, Direction, Number of CpGs.}
+\item{postAdjInfo }{ A list of two GenomicRanges objects, the obsPostAdj and the DMRs.
+The obsPostAdj contains the transformed observations for each bin and the adjusted predictions for each bin (0-normal, 1-hyper, 2-hypo).
+The DMRs contains the detected regions based on the user-defined arguments, providing the start genomic position, the end genomic position, the length, the direction and the number of CpGs.
+}
 }
 
 \examples{
-hmmbird2 <- hummingbirdPostAdjustment(em=hmmbird1$obs, pos=m_pos, minCpGs=10, minLength=100, maxGap=300)
-hmmbird2$DMRs
+postAdjInfo <- hummingbirdPostAdjustment(experimentInfo = exampleSE, emInfo = emInfo, minCpGs = 10, minLength = 100, maxGap = 300)
 }
 

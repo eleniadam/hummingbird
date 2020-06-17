@@ -6,8 +6,8 @@
 /* Function Registration */
 
 static const R_CallMethodDef callMethods[] = {
-	CALLDEF(hummingbirdPostAdjustment, 5),
-	CALLDEF(hummingbirdEM, 6),
+	CALLDEF(hummingbirdPostAdjustmentInternal, 5),
+	CALLDEF(hummingbirdEMinternal, 6),
 	NULL
 };
 

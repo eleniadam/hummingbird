@@ -1,11 +1,11 @@
 #include "utils.h"
 
-/* hummingbirdPostAdjustment: Post Adjustment algorithm for the output of the EM.
+/* hummingbirdPostAdjustmentInternal: Post Adjustment algorithm for the output of the EM.
  * This function adjusts HMM output such that each detected DMR
  * has a minimum length and a minimum number of CpGs in each DMR.
  */
 // [[Rcpp::export]]
-SEXP hummingbirdPostAdjustment(SEXP em, SEXP pos, SEXP minCpGs, SEXP minLength, SEXP maxGap)
+SEXP hummingbirdPostAdjustmentInternal(SEXP em, SEXP pos, SEXP minCpGs, SEXP minLength, SEXP maxGap)
 {
 	Rprintf("Reading input...\n");
 

@@ -50,48 +50,40 @@ A sample dataset "exampleHummingbird" is provided with the package as an example
 
 Specifically, partial data of chromosome 29 of the large offspring syndrome (LOS) study as described in "Chen, Z. et al (2017): Global misregulation of genes largely uncoupled to DNA methylome epimutations characterizes a congenital overgrowth syndrome. Scientific Reports 7, 12667". The raw FASTQ files of the WGBS experiment from this study are publibly available at Gene Expression Omnibus with accession no. GSE93775.
 
-The matrices m_abnormUM, m_abnormM, m_normM, m_normUM and m_pos are given as an input to the functions of the hummingbird package. They are the methylation data from the WGBS experiment. In this experiment, there are four replicates in the case (LOS) group and four replicates in the control group. However, this is just an example. The hummingbird package does not require replication in either the control or the case group.
+The matrices abnormUM, abnormM, normM, normUM and pos are given as a SummarizedExperiment input object to the functions of the hummingbird package. They are the methylation data from the WGBS experiment. In this experiment, there are four replicates in the case (LOS) group and four replicates in the control group. However, this is just an example. The hummingbird package does not require replication in either the control or the case group.
 
-The objects hmmbird1 and hmmbird2 are the output of the hummingbirdEM and hummingbirdPostAdjustment functions, when the aforementioned matrices are used as described in the Example section.
+The outputs of the hummingbirdEM, hummingbirdPostAdjustment and the hummingbirdGraph functions when the aforementioned matrices are used are described in the Example section.
 
 Below is a short presentation of the data:
 
 ```{r sampleDataset}
+library(GenomicRanges)
+library(SummarizedExperiment)
 library(hummingbird)
 data(exampleHummingbird)
 ```
 
 The CpG positions:
 ```{r sampleDataset_pos}
-m_pos[1:6,1]
+rowRanges(exampleSE)
 ```
 
 The matrices containing the methylated and unmethylated read count data of the normal group. Each column of the matrix represents a replicate and each row represents a CpG position:
 ```{r sampleDataset_norm}
-m_normM[1:6,1:4]
-m_normUM[1:6,1:4]
+head(assays(exampleSE)[["normM"]])
+head(assays(exampleSE)[["normUM"]])
 ```
 
 The matrices containing the methylated and unmethylated read count data of the abnormal group. Each column of the matrix represents a replicate and each row represents a CpG position:
 ```{r sampleDataset_abnorm}
-m_abnormM[1:6,1:4]
-m_abnormUM[1:6,1:4]
-```
-
-The output of the hummingbirdEM function:
-```{r sampleDataset_hmmbird_em}
-str(hmmbird1)
-```
-
-The output of the hummingbirdPostAdjustment function:
-```{r sampleDataset_hmmbird_postadj}
-str(hmmbird2)
+head(assays(exampleSE)[["abnormM"]])
+head(assays(exampleSE)[["abnormUM"]])
 ```
 
 
 ## Example
 
-Loading the hummingbird package and the exampleHummingbird dataset (only the input matrices are required from the sample dataset):
+Loading the hummingbird package and the exampleHummingbird dataset:
 
 ```{r hummingbird}
 library(hummingbird)
@@ -102,25 +94,24 @@ data(exampleHummingbird)
 
 This function reads in methylated and unmethylated read count data, transforms it into logarithm bin-wise data, sets up initial values and implements the EM algorithm to estimate HMM parameters and find the best sequence of hidden states based on model fitting.
 
-hmmbird1$obs is the output matrix containing the initial Direction, the Distance, the Start and End coordinates.
+emInfo is the output, a GenomicRanges object containing the start and end positions of each bin, the distance between the current bin the bin ahead of it, the average methylation rate of abnormal and normal groups and the initial direction.
 
 ```{r hummingbird_em}
-hmmbird1 <- hummingbirdEM(normM=m_normM, normUM=m_normUM, abnormM=m_abnormM, 
-abnormUM=m_abnormUM, pos=m_pos, binSize=40)
+emInfo <- hummingbirdEM(experimentInfo = exampleSE, binSize = 40)
+emInfo
 ```
 
 - hummingbirdPostAdjustment: Post Adjustment algorithm for the output of the EM
 
-As input to the function, the output matrix obs of the hummingbirdEM and the m_pos matrix is given.
+As input to the function, the output emInfo of the hummingbirdEM, the pos matrix and user-defined parameters are given.
 
 This function adjusts HMM output such that each detected DMR has a (user-defined) minimum length, maximum gap and minimum number of CpGs in each DMR.
 
-hmmbird2$DMRs is the output matrix containing the detected regions based on the user-defined arguments. The columns of the DMRs matrix are: Region number, Start genomic position, End genomic position, Length of region, Direction ("0" indicates no significant change, "1" indicates predicted hyper-methylation, and "2" indicates predicted hypo-methylation) and Number of CpGs.
+postAdjInfo is the output, a list of two GenomicRanges objects, the obsPostAdj and the DMRs. The DMRs contains the detected regions based on the user-defined arguments.The start genomic position, the end genomic position, Length of region, Direction ("0" indicates no significant change, "1" indicates predicted hyper-methylation, and "2" indicates predicted hypo-methylation) and the Number of CpGs.
 
 ```{r hummingbird_postAdjustment}
-hmmbird2 <- hummingbirdPostAdjustment(em=hmmbird1$obs, pos=m_pos, minCpGs=10, 
-minLength=100, maxGap=300)
-hmmbird2$DMRs
+postAdjInfo <- hummingbirdPostAdjustment(experimentInfo = exampleSE, emInfo = emInfo, minCpGs = 10, minLength = 100, maxGap = 300)
+postAdjInfo$DMRs
 ```
 
 - hummingbirdGraph: Generates the Methylation Level and Prediction graphs for the user-specified regions.
@@ -129,11 +120,10 @@ The Methylation Level graph is the sample averages from two comparison groups.
 
 The Predictions graph is the sample average difference along with predictions, where "0" indicates no significant change, "1" indicates predicted hyper-methylation, and "2" indicates predicted hypo-methylation.
 
-In the next figures, in order to visualize the 2nd DMR, which contains the largest number of CpGs (12), its coordinates (as specified in Start/End of hmmbird2$DMRs) are entered by the user:
+In the next figures, in order to visualize the 2nd DMR, which contains the largest number of CpGs (12), its coordinates (as specified in postAdjInfo$DMRs) are entered by the user:
 
 ```{r hummingbird_graph}
-hummingbirdGraph(pos=m_pos, normM=m_normM, normUM=m_normUM, abnormM=m_abnormM, 
-abnormUM=m_abnormUM, dmrs=hmmbird2$DMRs, coord1=107991, coord2=108350)
+hummingbirdGraph(experimentInfo = exampleSE, postAdjInfoDMRs = postAdjInfo$DMRs, coord1 = 107991, coord2 = 108350)
 ```
 
 ## Citation

@@ -9,14 +9,14 @@ double function_update_p(double hk_init, int * obs_dist, double * P_kl_all, doub
 double function_update_rho(double rho_init, int * obs_dist, double * P_kl_all, double * tran_p_new, int Bins);
 static double Brent_fmin(double ax, double bx, double tol, double f(double x, int * obs_dist, double * P_kl_all, double rho, int hmmDMR_k, int Bins), double *x, int * obs_dist, double * P_kl_all, double rho, int hmmDMR_k, int Bins);
 
-/* hummingbirdEM: Expectation-Maximization Algorithm for Fitting the Hidden Markov Model.
+/* hummingbirdEMinternal: Expectation-Maximization Algorithm for Fitting the Hidden Markov Model.
  * This function reads in methylated and unmethylated read count data,
  * transforms it into logarithm bin-wise data, sets up initial values
  * and implements the EM algorithm to estimate HMM parameters and find
  * the best sequence of hidden states based on model fitting.
  */
 // [[Rcpp::export]]
-SEXP hummingbirdEM(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM, SEXP pos, SEXP binSize)
+SEXP hummingbirdEMinternal(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM, SEXP pos, SEXP binSize)
 {
 	Rprintf("Reading input...\n");
 

@@ -5,9 +5,9 @@
 
 using namespace Rcpp;
 
-// hummingbirdEM
-SEXP hummingbirdEM(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM, SEXP pos, SEXP binSize);
-RcppExport SEXP _hummingbird_hummingbirdEM(SEXP normMSEXP, SEXP normUMSEXP, SEXP abnormMSEXP, SEXP abnormUMSEXP, SEXP posSEXP, SEXP binSizeSEXP) {
+// hummingbirdEMinternal
+SEXP hummingbirdEMinternal(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM, SEXP pos, SEXP binSize);
+RcppExport SEXP _hummingbird_hummingbirdEMinternal(SEXP normMSEXP, SEXP normUMSEXP, SEXP abnormMSEXP, SEXP abnormUMSEXP, SEXP posSEXP, SEXP binSizeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -17,13 +17,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type abnormUM(abnormUMSEXP);
     Rcpp::traits::input_parameter< SEXP >::type pos(posSEXP);
     Rcpp::traits::input_parameter< SEXP >::type binSize(binSizeSEXP);
-    rcpp_result_gen = Rcpp::wrap(hummingbirdEM(normM, normUM, abnormM, abnormUM, pos, binSize));
+    rcpp_result_gen = Rcpp::wrap(hummingbirdEMinternal(normM, normUM, abnormM, abnormUM, pos, binSize));
     return rcpp_result_gen;
 END_RCPP
 }
-// hummingbirdPostAdjustment
-SEXP hummingbirdPostAdjustment(SEXP em, SEXP pos, SEXP minCpGs, SEXP minLength, SEXP maxGap);
-RcppExport SEXP _hummingbird_hummingbirdPostAdjustment(SEXP emSEXP, SEXP posSEXP, SEXP minCpGsSEXP, SEXP minLengthSEXP, SEXP maxGapSEXP) {
+// hummingbirdPostAdjustmentInternal
+SEXP hummingbirdPostAdjustmentInternal(SEXP em, SEXP pos, SEXP minCpGs, SEXP minLength, SEXP maxGap);
+RcppExport SEXP _hummingbird_hummingbirdPostAdjustmentInternal(SEXP emSEXP, SEXP posSEXP, SEXP minCpGsSEXP, SEXP minLengthSEXP, SEXP maxGapSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -32,14 +32,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< SEXP >::type minCpGs(minCpGsSEXP);
     Rcpp::traits::input_parameter< SEXP >::type minLength(minLengthSEXP);
     Rcpp::traits::input_parameter< SEXP >::type maxGap(maxGapSEXP);
-    rcpp_result_gen = Rcpp::wrap(hummingbirdPostAdjustment(em, pos, minCpGs, minLength, maxGap));
+    rcpp_result_gen = Rcpp::wrap(hummingbirdPostAdjustmentInternal(em, pos, minCpGs, minLength, maxGap));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_hummingbird_hummingbirdEM", (DL_FUNC) &_hummingbird_hummingbirdEM, 6},
-    {"_hummingbird_hummingbirdPostAdjustment", (DL_FUNC) &_hummingbird_hummingbirdPostAdjustment, 5},
+    {"_hummingbird_hummingbirdEMinternal", (DL_FUNC) &_hummingbird_hummingbirdEMinternal, 6},
+    {"_hummingbird_hummingbirdPostAdjustmentInternal", (DL_FUNC) &_hummingbird_hummingbirdPostAdjustmentInternal, 5},
     {NULL, NULL, 0}
 };
 

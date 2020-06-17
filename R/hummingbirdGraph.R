@@ -1,4 +1,12 @@
-hummingbirdGraph <- function(pos, normM, normUM, abnormM, abnormUM, dmrs, coord1, coord2){
+hummingbirdGraph <- function(experimentInfo, postAdjInfoDMRs, coord1, coord2){
+
+    ## Input
+    pos <- matrix(rowRanges(experimentInfo)@ranges@pos)
+    normM <- assays(experimentInfo)[["normM"]]
+    normUM <- assays(experimentInfo)[["normUM"]]
+    abnormM <- assays(experimentInfo)[["abnormM"]]
+    abnormUM <- assays(experimentInfo)[["abnormUM"]]
+    dmrs <- matrix(c(start(ranges(postAdjInfoDMRs)), end(ranges(postAdjInfoDMRs)), postAdjInfoDMRs$length, postAdjInfoDMRs$direction, postAdjInfoDMRs$CpGs), nrow=length(postAdjInfoDMRs), ncol=5)
 
     ## Data within the selected coordinates
     genomicPositions <- which(pos >= coord1 & pos <= coord2)
@@ -11,10 +19,10 @@ hummingbirdGraph <- function(pos, normM, normUM, abnormM, abnormUM, dmrs, coord1
         i <- 1
         while(i <= dim(dmrs)[1]){
             ## Within a DMR
-            if( (pos[cnt] >= dmrs[i, 2]) & (pos[cnt] <= dmrs[i, 3]) ){
+            if( (pos[cnt] >= dmrs[i, 1]) & (pos[cnt] <= dmrs[i, 2]) ){
                 cntPos[k] <- cnt
                 cpgPos[k] <- pos[cnt]
-                labelPos[k] <- dmrs[i, 5]
+                labelPos[k] <- dmrs[i, 4]
                 found <- 1
                 break;
             }

@@ -11,8 +11,8 @@
 
 /* Functions accessible by R */
 
-SEXP hummingbirdPostAdjustment(SEXP em, SEXP pos, SEXP minCpGs, SEXP minLength, SEXP maxGap);
+SEXP hummingbirdPostAdjustmentInternal(SEXP em, SEXP pos, SEXP minCpGs, SEXP minLength, SEXP maxGap);
 
-SEXP hummingbirdEM(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM, SEXP pos, SEXP binSize);
+SEXP hummingbirdEMinternal(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM, SEXP pos, SEXP binSize);
 
 
