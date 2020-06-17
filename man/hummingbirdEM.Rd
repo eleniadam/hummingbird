@@ -40,6 +40,7 @@ A GenomicRanges object containing the start and end positions of each bin, the d
 }
 }
 \examples{
+library(GenomicRanges)
 data(exampleHummingbird)
 emInfo <- hummingbirdEM(experimentInfo = exampleSE, binSize = 40)
 }
