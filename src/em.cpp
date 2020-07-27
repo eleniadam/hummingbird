@@ -36,36 +36,47 @@ SEXP hummingbirdEMinternal(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM,
 	SEXP S_dim_matrices = getAttrib(normM, R_DimSymbol);
 	int total_lines = INTEGER(S_dim_matrices)[0];
 	int total_repl = INTEGER(S_dim_matrices)[1];
+	
+	SEXP S_dim_matrices_ab = getAttrib(abnormM, R_DimSymbol);
+	int total_repl_ab = INTEGER(S_dim_matrices_ab)[1];
 
-	Rprintf("Total lines: %d, total replicates: %d\n", total_lines, total_repl);
+	Rprintf("Total lines: %d, total replicates in normal group: %d and in abnormal group: %d\n", total_lines, total_repl, total_repl_ab);
 
 	double *matrix_normM, *matrix_normUM, *matrix_ABnormM, *matrix_ABnormUM, *matrix_normC, *matrix_ABnormC;
 	int *matrix_pos;
 
 	matrix_normM = (double *)malloc(sizeof(double)*total_lines*total_repl);
 	matrix_normUM = (double *)malloc(sizeof(double)*total_lines*total_repl);
-	matrix_ABnormM = (double *)malloc(sizeof(double)*total_lines*total_repl);
-	matrix_ABnormUM = (double *)malloc(sizeof(double)*total_lines*total_repl);
+	matrix_ABnormM = (double *)malloc(sizeof(double)*total_lines*total_repl_ab);
+	matrix_ABnormUM = (double *)malloc(sizeof(double)*total_lines*total_repl_ab);
 	matrix_normC = (double *)malloc(sizeof(double)*total_lines*total_repl);
-	matrix_ABnormC = (double *)malloc(sizeof(double)*total_lines*total_repl);
+	matrix_ABnormC = (double *)malloc(sizeof(double)*total_lines*total_repl_ab);
 	matrix_pos = (int *)malloc(sizeof(int)*total_lines);
 
-	int i, j;
+	int i, j, j_ab;
 	for(i=0;i<total_lines;i++){
 		matrix_pos[i] = INTEGER(pos)[i];
 
 		for(j=0;j<total_repl;j++){
 			matrix_normM[idx2c(i,j,total_lines)] = INTEGER(normM)[idx2c(i,j,total_lines)] + 0.5;
 			matrix_normUM[idx2c(i,j,total_lines)] = INTEGER(normUM)[idx2c(i,j,total_lines)] + 0.5;
-			matrix_ABnormM[idx2c(i,j,total_lines)] = INTEGER(abnormM)[idx2c(i,j,total_lines)] + 0.5;
-			matrix_ABnormUM[idx2c(i,j,total_lines)] = INTEGER(abnormUM)[idx2c(i,j,total_lines)] + 0.5;
+
 		}
+		
+		for(j_ab=0;j_ab<total_repl_ab;j_ab++){
+			matrix_ABnormM[idx2c(i,j_ab,total_lines)] = INTEGER(abnormM)[idx2c(i,j_ab,total_lines)] + 0.5;
+			matrix_ABnormUM[idx2c(i,j_ab,total_lines)] = INTEGER(abnormUM)[idx2c(i,j_ab,total_lines)] + 0.5;
+		}
+		
 	}
 
 	for(i=0;i<total_lines;i++){
 		for(j=0;j<total_repl;j++){
 			matrix_normC[idx2c(i,j,total_lines)] = matrix_normM[idx2c(i,j,total_lines)] + matrix_normUM[idx2c(i,j,total_lines)];
-			matrix_ABnormC[idx2c(i,j,total_lines)] = matrix_ABnormM[idx2c(i,j,total_lines)] + matrix_ABnormUM[idx2c(i,j,total_lines)];
+		}
+		
+		for(j_ab=0;j_ab<total_repl_ab;j_ab++){
+			matrix_ABnormC[idx2c(i,j_ab,total_lines)] = matrix_ABnormM[idx2c(i,j_ab,total_lines)] + matrix_ABnormUM[idx2c(i,j_ab,total_lines)];
 		}
 	}
 
@@ -84,7 +95,7 @@ SEXP hummingbirdEMinternal(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM,
 	int start = 0;
 	int end = 0;
 	int k = 0;
-	int kcol;
+	int kcol, kcol_ab;
 	int found;
 	int temp_dist = 0;
 
@@ -115,8 +126,11 @@ SEXP hummingbirdEMinternal(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM,
 			for(kcol = 0; kcol < total_repl; kcol++){
 				sum_normM = sum_normM + matrix_normM[idx2c(k,kcol,total_lines)];
 				sum_normC = sum_normC + matrix_normC[idx2c(k,kcol,total_lines)];
-				sum_abnormM = sum_abnormM + matrix_ABnormM[idx2c(k,kcol,total_lines)];
-				sum_abnormC = sum_abnormC + matrix_ABnormC[idx2c(k,kcol,total_lines)];
+			}
+			
+			for(kcol_ab = 0; kcol_ab < total_repl_ab; kcol_ab++){
+				sum_abnormM = sum_abnormM + matrix_ABnormM[idx2c(k,kcol_ab,total_lines)];
+				sum_abnormC = sum_abnormC + matrix_ABnormC[idx2c(k,kcol_ab,total_lines)];
 			}
 
 			k++;

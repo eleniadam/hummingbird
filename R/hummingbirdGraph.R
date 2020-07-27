@@ -1,12 +1,16 @@
-hummingbirdGraph <- function(experimentInfo, postAdjInfoDMRs, coord1, coord2){
+hummingbirdGraph <- function(experimentInfoControl, experimentInfoCase,
+                            postAdjInfoDMRs, coord1, coord2){
 
     ## Input
-    pos <- matrix(rowRanges(experimentInfo)@ranges@pos)
-    normM <- assays(experimentInfo)[["normM"]]
-    normUM <- assays(experimentInfo)[["normUM"]]
-    abnormM <- assays(experimentInfo)[["abnormM"]]
-    abnormUM <- assays(experimentInfo)[["abnormUM"]]
-    dmrs <- matrix(c(start(ranges(postAdjInfoDMRs)), end(ranges(postAdjInfoDMRs)), postAdjInfoDMRs$length, postAdjInfoDMRs$direction, postAdjInfoDMRs$CpGs), nrow=length(postAdjInfoDMRs), ncol=5)
+    pos <- matrix(rowRanges(experimentInfoControl)@ranges@pos)
+    normM <- assays(experimentInfoControl)[["normM"]]
+    normUM <- assays(experimentInfoControl)[["normUM"]]
+    abnormM <- assays(experimentInfoCase)[["abnormM"]]
+    abnormUM <- assays(experimentInfoCase)[["abnormUM"]]
+    dmrs <- matrix(c(start(ranges(postAdjInfoDMRs)),
+                    end(ranges(postAdjInfoDMRs)), postAdjInfoDMRs$length,
+                    postAdjInfoDMRs$direction, postAdjInfoDMRs$CpGs),
+                    nrow=length(postAdjInfoDMRs), ncol=5)
 
     ## Data within the selected coordinates
     genomicPositions <- which(pos >= coord1 & pos <= coord2)
@@ -49,23 +53,26 @@ hummingbirdGraph <- function(experimentInfo, postAdjInfoDMRs, coord1, coord2){
     }
 
     ## Data presentation for the figures
-    valuesDifference <- norm_p - abnorm_p
+    valuesDifference <- abnorm_p - norm_p
     valMin <- min(valuesDifference)
     valMax <- max(valuesDifference)
     fig2Limit <- (max(abs(valMax), abs(valMin))) + 0.1
 
-    ## Figure 1 - Methylation Level
+    ## Figure 1 - Observations
     par(mar=c(5, 5, 1, 1))
-    plot(cpgPos, norm_p, pch=1, main="", xlab="", ylab="Methylation Level", ylim=c(0, 1))
+    plot(cpgPos, norm_p, pch=1, main="", xlab="", ylab="Observations",
+        ylim=c(0, 1))
     lines(cpgPos, abnorm_p, pch=19, type="p")
     legend("bottomleft", c("Norm", "Abnorm"), pch=c(1, 19), cex=.75)
 
     ## Figure 2 - Predictions
     par(mar=c(5, 5, 1, 1))
-    plot(cpgPos, valuesDifference, pch=NA, main="", xlab="", ylab="Predictions", ylim=c(-fig2Limit, fig2Limit))
+    plot(cpgPos, valuesDifference, pch=NA, main="", xlab="",
+        ylab="Predictions", ylim=c(-fig2Limit, fig2Limit))
     abline(h=0, lty=4)
     text(cpgPos, valuesDifference, labels=labelPos)
-    legend("bottomleft", c("0: No change", "1: Hyper Methylation", "2: Hypo Methylation"), cex=.75)
+    legend("bottomleft", c("0: No change", "1: Hyper Methylation",
+                            "2: Hypo Methylation"), cex=.75)
 
 }
 

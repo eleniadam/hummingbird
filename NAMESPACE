@@ -1,5 +1,6 @@
 useDynLib(hummingbird, .registration=TRUE)
-export('hummingbirdEMinternal', 'hummingbirdPostAdjustmentInternal', 'hummingbirdGraph', 'hummingbirdEM', 'hummingbirdPostAdjustment')
+export('hummingbirdEMinternal', 'hummingbirdPostAdjustmentInternal',
+        'hummingbirdGraph', 'hummingbirdEM', 'hummingbirdPostAdjustment')
 importFrom(Rcpp, evalCpp)
 importFrom(SummarizedExperiment, assays, rowRanges, start, ranges, end)
 importFrom(GenomicRanges, GRanges)

@@ -1,37 +1,55 @@
 \name{hummingbirdGraph}
 \alias{hummingbirdGraph}
 \title{
-Methylation Level and Predictions Graphs
+Observations and Predictions Graphs
 }
 \description{
-Generates the Methylation Level and Predictions graphs for the user-specified regions. The Methylation Level graph is the sample averages from two comparison groups. The Predictions graph is the sample average difference along with predictions, where "0" indicates no significant change, "1" indicates predicted hyper-methylation, and "2" indicates predicted hypo-methylation.
+This function generates observation and prediction graphs for a user specified
+region.
 }
 \usage{
-hummingbirdGraph(experimentInfo, postAdjInfoDMRs, coord1, coord2)
+hummingbirdGraph(experimentInfoControl, experimentInfoCase, postAdjInfoDMRs,
+                    coord1, coord2)
 }
 \arguments{
-    \item{experimentInfo}{
-A SummarizedExperiment object containing the four assays: normM, normUM, abnormM, abnormUM and the CpG position information: pos.
+    \item{experimentInfoControl}{
+A SummarizedExperiment object containing the input data for the control group:
+The two assays: normM, normUM and the CpG position information: pos.
+}
+    \item{experimentInfoCase}{
+A SummarizedExperiment object containing the input data for the case group:
+The two assays: abnormM, abnormUM and the CpG position information: pos.
 }
     \item{postAdjInfoDMRs}{
 The DMRs GenomicRanges object output of the hummingbirdPostAdjustment function.
 }
     \item{coord1}{
-The start coordinate of the genomic region to look into.
+The start coordinate of the genomic region to plot.
 }
     \item{coord2}{
-The end coordinate of the genomic region to look into.
+The end coordinate of the genomic region to plot.
 }
 }
 \value{
-The function outputs two graphs: The Methylation Level graph and the Predictions graph.
+The function outputs two graphs: The Observations graph and the Predictions
+graph.
+The observation figure shows bin-wise average methylation rate for case and
+control groups. The prediction figure shows bin-wise prediction, where "0"
+denotes a predicted normal bin; "1" denotes a predicted hypermethylated bin;
+and "2" denotes a predicted hypomethylated bin.
 }
 \examples{
 library(GenomicRanges)
 library(SummarizedExperiment)
 data(exampleHummingbird)
-emInfo <- hummingbirdEM(experimentInfo = exampleSE, binSize = 40)
-postAdjInfo <- hummingbirdPostAdjustment(experimentInfo = exampleSE, emInfo = emInfo, minCpGs = 10, minLength = 100, maxGap = 300)
-hummingbirdGraph(experimentInfo = exampleSE, postAdjInfoDMRs = postAdjInfo$DMRs, coord1 = 107991, coord2 = 108350)
+emInfo <- hummingbirdEM(experimentInfoControl = exampleSEControl,
+                        experimentInfoCase = exampleSECase, binSize = 40)
+postAdjInfo <- hummingbirdPostAdjustment(experimentInfo = exampleSEControl,
+                                            emInfo = emInfo, minCpGs = 10,
+                                            minLength = 100, maxGap = 300)
+hummingbirdGraph(experimentInfoControl = exampleSEControl,
+                    experimentInfoCase = exampleSECase,
+                    postAdjInfoDMRs = postAdjInfo$DMRs,
+                    coord1 = 107991, coord2 = 108350)
 }
 

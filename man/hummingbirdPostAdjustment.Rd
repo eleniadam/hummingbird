@@ -4,14 +4,23 @@
 Post Adjustment algorithm for the output of the EM
 }
 \description{
-This function adjusts HMM output such that each detected DMR has a minimum length and a minimum number of CpGs in each DMR.
+This function adjusts HMM output. It enables three additional requirements on
+DMRs: 1) the minimum length of a DMR, 2) the minimum number of CpGs in a DMR,
+and 3) the maximum distance (in base pairs) between any two adjacent CpGs in a
+DMR.
 }
 \usage{
-hummingbirdPostAdjustment(experimentInfo, emInfo, minCpGs, minLength, maxGap)
+hummingbirdPostAdjustment(experimentInfoControl, experimentInfoCase, emInfo,
+                            minCpGs, minLength, maxGap)
 }
 \arguments{
-    \item{experimentInfo}{
-A SummarizedExperiment object containing the four assays: normM, normUM, abnormM, abnormUM and the CpG position information: pos.
+    \item{experimentInfoControl}{
+A SummarizedExperiment object containing the input data for the control group:
+The two assays: normM, normUM and the CpG position information: pos.
+}
+    \item{experimentInfoCase}{
+A SummarizedExperiment object containing the input data for the case group:
+The two assays: abnormM, abnormUM and the CpG position information: pos.
 }
     \item{emInfo}{
 The output GenomicRanges object of the hummingbirdEM function.
@@ -27,9 +36,15 @@ The maximum gap between any two CpGs. Default value: 300.
 }
 }
 \value{
-\item{postAdjInfo }{ A list of two GenomicRanges objects, the obsPostAdj and the DMRs.
-The obsPostAdj contains the transformed observations for each bin and the adjusted predictions for each bin (0-normal, 1-hyper, 2-hypo).
-The DMRs contains the detected regions based on the user-defined arguments, providing the start genomic position, the end genomic position, the length, the direction and the number of CpGs.
+\item{postAdjInfo }{ A list of two GenomicRanges objects, the DMRs and the
+obsPostAdj.
+Specifically, the DMRs contains the detected regions based on the
+user-defined arguments (minLength, minCpGs, and maxGap). It contains the
+refined DMRs with the start genomic position, the end genomic position, length
+of the region, direction of predicted methylation change ("0" indicates no
+significant change, "1" indicates predicted hyper-methylation, and "2"
+indicates predicted hypo-methylation), and the number of CpGs. The obsPostAdj
+object contains methylation status of each CpG site.
 }
 }
 
@@ -37,7 +52,12 @@ The DMRs contains the detected regions based on the user-defined arguments, prov
 library(GenomicRanges)
 library(SummarizedExperiment)
 data(exampleHummingbird)
-emInfo <- hummingbirdEM(experimentInfo = exampleSE, binSize = 40)
-postAdjInfo <- hummingbirdPostAdjustment(experimentInfo = exampleSE, emInfo = emInfo, minCpGs = 10, minLength = 100, maxGap = 300)
+emInfo <- hummingbirdEM(experimentInfoControl = exampleSEControl,
+                        experimentInfoCase = exampleSECase, binSize = 40)
+postAdjInfo <- hummingbirdPostAdjustment(
+                                    experimentInfoControl = exampleSEControl,
+                                    experimentInfoCase = exampleSECase,
+                                    emInfo = emInfo, minCpGs = 10,
+                                    minLength = 100, maxGap = 300)
 }
 

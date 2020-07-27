@@ -4,26 +4,41 @@
 EM Algorithm for Fitting the Hidden Markov Model
 }
 \description{
-This function reads in methylated and unmethylated read count data, transforms it into logarithm bin-wise data, sets up initial values and implements the EM algorithm to estimate HMM parameters and find the best sequence of hidden states based on model fitting.
+This function reads input data, sets initial values, executes the
+Expectation-Maximization (EM) algorithm for the Bayesian HMM and infers the
+best sequence of methylation states.
 }
 \usage{
-hummingbirdEM(experimentInfo, binSize)
+hummingbirdEM(experimentInfoControl, experimentInfoCase, binSize)
 }
 \arguments{
-    \item{experimentInfo}{
-A SummarizedExperiment object containing the four assays: normM, normUM, abnormM, abnormUM and the CpG position information: pos.
+    \item{experimentInfoControl}{
+A SummarizedExperiment object containing the input data for the control group:
+The two assays: normM, normUM and the CpG position information: pos.
+}
+    \item{experimentInfoCase}{
+A SummarizedExperiment object containing the input data for the case group:
+The two assays: abnormM, abnormUM and the CpG position information: pos.
 }
     \item{normM}{
-A matrix containing the methylated read count data of the normal group. Each column of the matrix represents a replicate and each row represents a CpG position.
+A matrix containing the methylated read count data of the normal group. Each
+column of the matrix represents a replicate and each row represents a CpG
+position.
 }
     \item{normUM}{
-A matrix containing the unmethylated read count data of the normal group. Each column of the matrix represents a replicate and each row represents a CpG position.
+A matrix containing the unmethylated read count data of the normal group. Each
+column of the matrix represents a replicate and each row represents a CpG
+position.
 }
     \item{abnormM}{
-A matrix containing the methylated read count data of the abnormal group. Each column of the matrix represents a replicate and each row represents a CpG position.
+A matrix containing the methylated read count data of the abnormal group. Each
+column of the matrix represents a replicate and each row represents a CpG
+position.
 }
     \item{abnormUM}{
-A matrix containing the unmethylated read count data of abnormal group. Each column of the matrix represents a replicate and each row represents a CpG position.
+A matrix containing the unmethylated read count data of abnormal group. Each
+column of the matrix represents a replicate and each row represents a CpG
+position.
 }
     \item{pos}{
 The CpG positions. It must be in the structure of a vector.
@@ -36,13 +51,18 @@ The size of a bin. Default value is: 40.
 
 \value{
 \item{emInfo }{
-A GenomicRanges object containing the start and end positions of each bin, the distance between the current bin the bin ahead of it, the average methylation rate of abnormal and normal groups, the initial direction, the transformed observations for each bin.
+A GenomicRanges object that contains the start and end positions of each bin,
+the distance between the current bin the bin ahead of it, the average
+methylation rate of normal and abnormal groups and the predicted direction of
+methylation change ("0" means a predicted normal bin; "1" means a predicted
+hypermethylated bin; "2" means a predicted hypomethylated bin).
 }
 }
 \examples{
 library(GenomicRanges)
 library(SummarizedExperiment)
 data(exampleHummingbird)
-emInfo <- hummingbirdEM(experimentInfo = exampleSE, binSize = 40)
+emInfo <- hummingbirdEM(experimentInfoControl = exampleSEControl,
+                        experimentInfoCase = exampleSECase, binSize = 40)
 }
 
