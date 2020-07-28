@@ -44,9 +44,11 @@ library(SummarizedExperiment)
 data(exampleHummingbird)
 emInfo <- hummingbirdEM(experimentInfoControl = exampleSEControl,
                         experimentInfoCase = exampleSECase, binSize = 40)
-postAdjInfo <- hummingbirdPostAdjustment(experimentInfo = exampleSEControl,
-                                            emInfo = emInfo, minCpGs = 10,
-                                            minLength = 100, maxGap = 300)
+postAdjInfo <- hummingbirdPostAdjustment(
+                                    experimentInfoControl = exampleSEControl,
+                                    experimentInfoCase = exampleSECase,
+                                    emInfo = emInfo, minCpGs = 10,
+                                    minLength = 100, maxGap = 300)
 hummingbirdGraph(experimentInfoControl = exampleSEControl,
                     experimentInfoCase = exampleSECase,
                     postAdjInfoDMRs = postAdjInfo$DMRs,
