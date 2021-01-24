@@ -36,15 +36,17 @@ The maximum gap between any two CpGs. Default value: 300.
 }
 }
 \value{
-\item{postAdjInfo }{ A list of two GenomicRanges objects, the DMRs and the
-obsPostAdj.
-Specifically, the DMRs contains the detected regions based on the
-user-defined arguments (minLength, minCpGs, and maxGap). It contains the
-refined DMRs with the start genomic position, the end genomic position, length
+A list of two GenomicRanges objects, the DMRs and the obsPostAdj.
+\item{DMRs }{
+Contains the detected regions based on the user-defined arguments 
+(minLength, minCpGs, and maxGap). It contains the refined DMRs 
+with the start genomic position, the end genomic position, length
 of the region, direction of predicted methylation change ("0" indicates no
 significant change, "1" indicates predicted hyper-methylation, and "2"
-indicates predicted hypo-methylation), and the number of CpGs. The obsPostAdj
-object contains methylation status of each CpG site.
+indicates predicted hypo-methylation), and the number of CpGs. 
+}
+\item{obsPostAdj }{
+The methylation status of each CpG site.
 }
 }
 

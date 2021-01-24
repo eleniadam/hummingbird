@@ -13,11 +13,11 @@ syndrome (LOS) study described in Chen Z. et al (2017).
 \usage{data("exampleHummingbird")}
 \format{
     \describe{
-    \item{experimentInfoControl}{
+    \item{experimentSEControl}{
 A SummarizedExperiment object containing the input data for the control group:
 The two assays: normM, normUM and the CpG position information: pos.
 }
-    \item{experimentInfoCase}{
+    \item{experimentSECase}{
 A SummarizedExperiment object containing the input data for the case group:
 The two assays: abnormM, abnormUM and the CpG position information: pos.
 }
