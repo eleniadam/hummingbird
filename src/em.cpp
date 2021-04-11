@@ -759,7 +759,7 @@ SEXP hummingbirdEMinternal(SEXP normM, SEXP normUM, SEXP abnormM, SEXP abnormUM,
 				count_states = count_states +1;
 			}
 			else if((P_k[idx2c(i,2,B)] >= P_k[idx2c(i,0,B)]) && (P_k[idx2c(i,2,B)] >= P_k[idx2c(i,1,B)])){
-				direction[i] = 2;
+				direction[i] = -1;
 				count_states = count_states +1;
 			}
 		}

@@ -36,7 +36,7 @@ graph.
 The observation figure shows bin-wise average methylation rate for case and
 control groups. The prediction figure shows bin-wise prediction, where "0"
 denotes a predicted normal bin; "1" denotes a predicted hypermethylated bin;
-and "2" denotes a predicted hypomethylated bin.
+and "-1" denotes a predicted hypomethylated bin.
 }
 \examples{
 library(GenomicRanges)

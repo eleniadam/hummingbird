@@ -41,7 +41,7 @@ hummingbird package, the hummingbirdPostAdjustment.
 It contains the (numbered) refined DMRs with the 
 start genomic position, the end genomic position, length of the region, 
 direction of predicted methylation change ("0" indicates no significant 
-change, "1" indicates predicted hyper-methylation, and "2" indicates 
+change, "1" indicates predicted hyper-methylation, and "-1" indicates 
 predicted hypo-methylation) and the number of CpGs.
 }
 \item{obsPostAdj }{The methylation status of each CpG site.

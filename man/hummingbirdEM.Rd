@@ -41,7 +41,7 @@ A GenomicRanges object that contains the start and end positions of each bin,
 the distance between the current bin the bin ahead of it, the average
 methylation rate of normal and abnormal groups and the predicted direction of
 methylation change ("0" means a predicted normal bin; "1" means a predicted
-hypermethylated bin; "2" means a predicted hypomethylated bin).
+hypermethylated bin; "-1" means a predicted hypomethylated bin).
 }
 \examples{
 library(GenomicRanges)

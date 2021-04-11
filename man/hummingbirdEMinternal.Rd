@@ -50,7 +50,7 @@ hummingbird package, the hummingbirdEM.
 \value{
 \item{obs }{For each bin: 
 The predicted direction of methylation change ("0" means a predicted normal 
-bin; "1" means a predicted hypermethylated bin; "2" means a predicted 
+bin; "1" means a predicted hypermethylated bin; "-1" means a predicted 
 hypomethylated bin).
 The distance between the current bin and the bin ahead of it,
 the start and end positions of each bin.
