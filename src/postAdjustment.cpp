@@ -111,7 +111,7 @@ SEXP hummingbirdPostAdjustmentInternal(SEXP em, SEXP pos, SEXP minCpGs, SEXP min
 					if(tmp_direction == 1){
 						strcpy(region_state, "hyper");
 					}
-					if(tmp_direction == 2){
+					if(tmp_direction == -1){
 						strcpy(region_state, "hypo");
 					}
 					region_length = end_pos_adj - start_pos_adj;
@@ -159,7 +159,7 @@ SEXP hummingbirdPostAdjustmentInternal(SEXP em, SEXP pos, SEXP minCpGs, SEXP min
 					if(tmp_direction == 1){
 						strcpy(region_state, "hyper");
 					}
-					if(tmp_direction == 2){
+					if(tmp_direction == -1){
 						strcpy(region_state, "hypo");
 					}
 					region_length = end_pos_adj - start_pos_adj;
@@ -205,7 +205,7 @@ SEXP hummingbirdPostAdjustmentInternal(SEXP em, SEXP pos, SEXP minCpGs, SEXP min
 				if(tmp_direction == 1){
 					strcpy(region_state, "hyper");
 				}
-				if(tmp_direction == 2){
+				if(tmp_direction == -1){
 					strcpy(region_state, "hypo");
 				}
 				region_length = end_pos_adj - start_pos_adj;

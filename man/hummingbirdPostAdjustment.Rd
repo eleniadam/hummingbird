@@ -42,7 +42,7 @@ Contains the detected regions based on the user-defined arguments
 (minLength, minCpGs, and maxGap). It contains the refined DMRs 
 with the start genomic position, the end genomic position, length
 of the region, direction of predicted methylation change ("0" indicates no
-significant change, "1" indicates predicted hyper-methylation, and "2"
+significant change, "1" indicates predicted hyper-methylation, and "-1"
 indicates predicted hypo-methylation), and the number of CpGs. 
 }
 \item{obsPostAdj }{

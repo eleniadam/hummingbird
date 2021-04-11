@@ -79,7 +79,7 @@ figures, which we call the observation figure and the prediction figure. The
 observation figure shows bin-wise average methylation rate for case and control 
 groups. The prediction figure shows bin-wise prediction, where "0" denotes 
 a predicted normal bin; "1" denotes a predicted hypermethylated bin; 
-and "2" denotes a predicted hypomethylated bin.
+and "-1" denotes a predicted hypomethylated bin.
 
 ## Sample Dataset
 
@@ -196,7 +196,7 @@ emInfo is a GenomicRanges object that contains the start and end positions of
 each bin, the distance between the current bin the bin ahead of it, the average 
 methylation rate of normal and abnormal groups and the predicted direction of 
 methylation change ("0" means a predicted normal bin; "1" means a predicted 
-hypermethylated bin; "2" means a predicted hypomethylated bin).
+hypermethylated bin; "-1" means a predicted hypomethylated bin).
 
 hummingbirdPostAdjustment adjusts emInfo such that each detected DMR has a 
 user-defined minimum length, minimum number of CpGs, and maximum gap between 
@@ -218,7 +218,7 @@ Specifically, the DMRs contains the detected regions based on the user-defined
 arguments (minLength, minCpGs, and maxGap). It contains the refined DMRs with 
 the start genomic position, the end genomic position, length of the region, 
 direction of predicted methylation change ("0" indicates no significant change, 
-"1" indicates predicted hyper-methylation, and "2" indicates predicted 
+"1" indicates predicted hyper-methylation, and "-1" indicates predicted 
 hypo-methylation), and the number of CpGs. The obsPostAdj object contains 
 methylation status of each CpG site.
 
@@ -227,7 +227,7 @@ a user-defined genomic region. In the observation plot, the horizontal axis
 shows genomic positions; the vertical axis displays sample average methylation 
 rates for normal and abnormal groups, respectively, for each bin. The 
 prediction plot displays the sample average difference between the abnormal 
-group and the normal group for each bin. Numbers ("0", "1", "2") indicate the 
+group and the normal group for each bin. Numbers ("0", "1", "-1") indicate the 
 predictions.
 
 The next two figures (the former is an observation plot and the latter is a 

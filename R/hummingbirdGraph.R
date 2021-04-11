@@ -72,7 +72,7 @@ hummingbirdGraph <- function(experimentInfoControl, experimentInfoCase,
     abline(h=0, lty=4)
     text(cpgPos, valuesDifference, labels=labelPos)
     legend("bottomleft", c("0: No change", "1: Hyper Methylation",
-                            "2: Hypo Methylation"), cex=.75)
+                            "-1: Hypo Methylation"), cex=.75)
 
 }
 
