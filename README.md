@@ -5,4 +5,4 @@ A Bayesian Hidden Markov Model for the detection of differentially methylated re
 #### References
 
 Adam E., Ji T., Ranjan D., “Hummingbird: Bayesian Hidden Markov Model for the detection of differentially methylated
-regions.” Bioconductor R package (2020) DOI: 10.18129/B9.bioc.hummingbird
+regions.” Bioconductor R package (2025) DOI: 10.18129/B9.bioc.hummingbird
